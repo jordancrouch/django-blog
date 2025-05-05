@@ -1,4 +1,9 @@
-{%load static%} {% url 'home' as home_url %} {% url 'about' as about_url %}
+{% load static %}
+{% url 'home' as home_url %}
+{% url 'about' as about_url %}
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 <!DOCTYPE html>
 <html class="h-100" lang="en">
@@ -39,13 +44,14 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}"
-          ><span class="brand"
-            >c<span class="red-o">o</span>de<span class="thin"
-              >|star</span
-            ></span
-          ></a
-        >
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <span class="brand">
+            c
+            <span class="red-o">o</span>
+            de
+            <span class="thin">|star</span>
+          </span>
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -64,17 +70,49 @@
                 class="nav-link {% if request.path == home_url %}active{% endif %}"
                 aria-current="page"
                 href="{% url 'home' %}"
-                >Home</a
               >
+                Home
+              </a>
             </li>
             <li class="nav-item">
               <a
                 class="nav-link {% if request.path == about_url %}active{% endif %}"
                 aria-current="page"
                 href="{% url 'about' %}"
-                >About</a
               >
+                About
+              </a>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == logout_url %}active{% endif %}"
+                aria-current="page"
+                href="{% url 'account_logout' %}"
+              >
+                Logout
+              </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == signup_url %}active{% endif %}"
+                aria-current="page"
+                href="{% url 'account_signup' %}"
+              >
+                Register
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == login_url %}active{% endif %}"
+                aria-current="page"
+                href="{% url 'account_login' %}"
+              >
+                Login
+              </a>
+            </li>
+            {% endif %}
           </ul>
           <span class="navbar-text text-muted">
             adventures of a software developer
@@ -97,7 +135,8 @@
         Made by Code Instituters {% endblock copyright %}
       </p>
       <p class="m-0 text-center text-white">
-        Follow us: <i class="fab fa-facebook-square ms-3"></i>
+        Follow us:
+        <i class="fab fa-facebook-square ms-3"></i>
         <i class="fab fa-twitter-square ms-3"></i>
         <i class="fab fa-instagram-square ms-3"></i>
         <i class="fab fa-youtube-square ms-3"></i>
